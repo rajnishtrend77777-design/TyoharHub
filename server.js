@@ -8,6 +8,7 @@ const dataFile=path.join(__dirname,"tyoharhub-data.json");
 const uploadDir=path.join(__dirname,"public","uploads"); fs.mkdirSync(uploadDir,{recursive:true});
 const upload=multer({dest:uploadDir});
 app.use(express.json({limit:"2mb"})); app.use(express.urlencoded({extended:true})); app.use(cookieParser());
+app.use(express.static(path.join(__dirname, "public")));
 const seed=[
 {id:1,title:"Happy Diwali Festival",festival:"Diwali",price:29,image:"/assets/poster-diwali.svg",description:"Premium diya and rangoli design"},
 {id:2,title:"Raksha Bandhan Premium",festival:"Raksha Bandhan",price:19,image:"/assets/poster-raksha.svg",description:"Brother-sister festive design"},
