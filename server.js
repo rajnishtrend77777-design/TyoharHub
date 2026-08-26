@@ -173,22 +173,21 @@ ${cards || `<p>New ${name} posters are coming soon. Check back soon on TyoharHub
     </article>
   `).join("");
 
-app.get("/sitemap.xml",(req,res)=>{
-  const baseUrl="https://tyoharhub.onrender.com";
+app.get("/sitemap.xml", (req, res) => {
+  const baseUrl = "https://tyoharhub.onrender.com";
 
-  const urls=[
-    "/"
+  const urls = [
+    "/",
+    ...seoFestivals.map(([slug]) => `/${slug}-posters`)
   ];
-  
-  const xml=`<?xml version="1.0" encoding="UTF-8"?>
+
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls.map(url=>`
+${urls.map(url => `
   <url>
     <loc>${baseUrl}${url}</loc>
   </url>`).join("")}
 </urlset>`;
 
-  res.type("application/xml").send(xml);
+  res.status(200).set("Content-Type", "application/xml; charset=utf-8").send(xml);
 });
-app.get("*",(req,res)=>{if(req.path.startsWith("/api/"))return res.status(404).end();res.sendFile(path.join(__dirname,"public","index.html"))});
-app.listen(PORT,()=>console.log(`TyoharHub running at http://localhost:${PORT}`));
