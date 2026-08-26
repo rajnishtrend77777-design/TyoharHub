@@ -144,7 +144,7 @@ ${cards || `<p>New ${name} posters are coming soon. Check back soon on TyoharHub
 </html>`);
   });
 });
-  const posterCards = posters.map(p => `
+  const posterCards = (data.posters || []).map(p => `
     <article class="poster-card">
       <img
         src="${escapeHtml(p.image)}"
