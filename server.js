@@ -38,6 +38,44 @@ app.post("/api/orders/verify",(req,res)=>{if(!process.env.RAZORPAY_KEY_SECRET)re
 app.use(express.static(path.join(__dirname,"public"),{index:"index.html"}));
 app.get(`/${ADMIN_PATH}`,(req,res)=>res.sendFile(path.join(__dirname,"admin","admin.html")));
 app.get("/admin.js",(req,res)=>res.sendFile(path.join(__dirname,"admin","admin.js")));
+app.get("/diwali-posters",(req,res)=>{
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Diwali Posters 2026 – Free & Premium Festival Designs | TyoharHub</title>
+
+  <meta name="description" content="Explore beautiful Diwali posters on TyoharHub. Download free Diwali designs or choose premium festival posters for social media, business promotions and celebrations.">
+
+  <link rel="canonical" href="https://tyoharhub.onrender.com/diwali-posters">
+</head>
+
+<body>
+  <h1>Diwali Posters 2026</h1>
+
+  <p>
+    Explore beautiful Diwali festival posters on TyoharHub.
+    Download free Diwali designs and discover premium posters
+    for social media, businesses and celebrations.
+  </p>
+
+  <h2>Diwali Festival Posters</h2>
+
+  <p>
+    Diwali posters, Diwali wishes posters, Diwali festival designs
+    and premium Diwali poster templates.
+  </p>
+
+  <p>
+    <a href="/">← Back to TyoharHub</a>
+  </p>
+</body>
+</html>`;
+
+  res.type("html").send(html);
+});
 app.get("/sitemap.xml",(req,res)=>{
   const baseUrl="https://tyoharhub.onrender.com";
 
