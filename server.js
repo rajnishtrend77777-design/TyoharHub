@@ -191,4 +191,3 @@ ${urls.map(url => `
 
   res.status(200).set("Content-Type", "application/xml; charset=utf-8").send(xml);
 });
-});
