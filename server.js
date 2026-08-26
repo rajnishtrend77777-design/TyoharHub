@@ -1,6 +1,14 @@
 require("dotenv").config();
 const express=require("express"),path=require("path"),fs=require("fs"),crypto=require("crypto"),bcrypt=require("bcryptjs"),jwt=require("jsonwebtoken"),cookieParser=require("cookie-parser"),multer=require("multer"),Razorpay=require("razorpay");
 const app=express();
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
 const PORT=Number(process.env.PORT||3000);
 const JWT_SECRET=process.env.JWT_SECRET||"CHANGE_THIS_SECRET_IN_ENV";
 const ADMIN_PATH=(process.env.ADMIN_PATH||"/tyoharhub-control-7x9k2").replace(/^\//,"");
