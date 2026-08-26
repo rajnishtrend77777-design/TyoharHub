@@ -39,38 +39,223 @@ app.use(express.static(path.join(__dirname,"public"),{index:"index.html"}));
 app.get(`/${ADMIN_PATH}`,(req,res)=>res.sendFile(path.join(__dirname,"admin","admin.html")));
 app.get("/admin.js",(req,res)=>res.sendFile(path.join(__dirname,"admin","admin.js")));
 app.get("/diwali-posters",(req,res)=>{
+  const posters = data.posters.filter(
+    p => String(p.festival).toLowerCase() === "diwali"
+  );
+
+  const escapeHtml = (value="") =>
+    String(value)
+      .replace(/&/g,"&amp;")
+      .replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;")
+      .replace(/"/g,"&quot;")
+      .replace(/'/g,"&#039;");
+
+  const posterCards = posters.map(p => `
+    <article class="poster-card">
+      <img
+        src="${escapeHtml(p.image)}"
+        alt="${escapeHtml(p.title)}"
+        loading="lazy"
+      >
+
+      <div class="poster-info">
+        <h2>${escapeHtml(p.title)}</h2>
+        <p>${escapeHtml(p.description || "Beautiful Diwali festival poster")}</p>
+
+        ${
+          Number(p.price) === 0
+          ? `<span class="price free">FREE</span>`
+          : `<span class="price">₹${Number(p.price)}</span>`
+        }
+      </div>
+    </article>
+  `).join("");
+
   const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>Diwali Posters 2026 – Free & Premium Festival Designs | TyoharHub</title>
 
-  <meta name="description" content="Explore beautiful Diwali posters on TyoharHub. Download free Diwali designs or choose premium festival posters for social media, business promotions and celebrations.">
+  <meta
+    name="description"
+    content="Explore beautiful Diwali posters 2026 on TyoharHub. Find free and premium Diwali festival posters, wishes designs and creative templates."
+  >
 
-  <link rel="canonical" href="https://tyoharhub.onrender.com/diwali-posters">
+  <meta
+    name="keywords"
+    content="Diwali posters 2026, Diwali poster, Diwali wishes poster, Diwali festival poster, Diwali design, Diwali poster download"
+  >
+
+  <link
+    rel="canonical"
+    href="https://tyoharhub.onrender.com/diwali-posters"
+  >
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f7f7f7;
+      color: #222;
+    }
+
+    .header {
+      background: #111827;
+      color: white;
+      padding: 35px 20px;
+      text-align: center;
+    }
+
+    .header h1 {
+      margin: 0 0 12px;
+      font-size: 36px;
+    }
+
+    .header p {
+      max-width: 750px;
+      margin: auto;
+      line-height: 1.6;
+      color: #ddd;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 35px auto;
+      padding: 0 20px;
+    }
+
+    .intro {
+      background: white;
+      padding: 25px;
+      border-radius: 14px;
+      margin-bottom: 30px;
+    }
+
+    .intro h2 {
+      margin-top: 0;
+    }
+
+    .poster-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 25px;
+    }
+
+    .poster-card {
+      background: white;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 5px 20px rgba(0,0,0,.08);
+    }
+
+    .poster-card img {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      display: block;
+      background: #eee;
+    }
+
+    .poster-info {
+      padding: 18px;
+    }
+
+    .poster-info h2 {
+      font-size: 20px;
+      margin: 0 0 8px;
+    }
+
+    .poster-info p {
+      color: #666;
+      line-height: 1.5;
+      margin: 0 0 15px;
+    }
+
+    .price {
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .free {
+      color: green;
+    }
+
+    .back {
+      display: inline-block;
+      margin-top: 35px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    @media (max-width: 600px) {
+      .header h1 {
+        font-size: 28px;
+      }
+
+      .poster-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+
+      .poster-info {
+        padding: 12px;
+      }
+
+      .poster-info h2 {
+        font-size: 16px;
+      }
+    }
+  </style>
 </head>
 
 <body>
-  <h1>Diwali Posters 2026</h1>
 
-  <p>
-    Explore beautiful Diwali festival posters on TyoharHub.
-    Download free Diwali designs and discover premium posters
-    for social media, businesses and celebrations.
-  </p>
+  <header class="header">
+    <h1>Diwali Posters 2026</h1>
 
-  <h2>Diwali Festival Posters</h2>
+    <p>
+      Explore beautiful Diwali festival posters on TyoharHub.
+      Find free and premium Diwali designs for social media,
+      businesses and celebrations.
+    </p>
+  </header>
 
-  <p>
-    Diwali posters, Diwali wishes posters, Diwali festival designs
-    and premium Diwali poster templates.
-  </p>
+  <main class="container">
 
-  <p>
-    <a href="/">← Back to TyoharHub</a>
-  </p>
+    <section class="intro">
+      <h2>Diwali Festival Posters</h2>
+
+      <p>
+        Discover Diwali posters, Diwali wishes posters,
+        festival designs and premium Diwali poster templates.
+      </p>
+    </section>
+
+    <section class="poster-grid">
+      ${
+        posterCards ||
+        `<p>No Diwali posters available yet.</p>`
+      }
+    </section>
+
+    <a class="back" href="/">
+      ← Back to TyoharHub
+    </a>
+
+  </main>
+
 </body>
 </html>`;
 
