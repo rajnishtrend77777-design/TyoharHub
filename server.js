@@ -38,5 +38,22 @@ app.post("/api/orders/verify",(req,res)=>{if(!process.env.RAZORPAY_KEY_SECRET)re
 app.use(express.static(path.join(__dirname,"public"),{index:"index.html"}));
 app.get(`/${ADMIN_PATH}`,(req,res)=>res.sendFile(path.join(__dirname,"admin","admin.html")));
 app.get("/admin.js",(req,res)=>res.sendFile(path.join(__dirname,"admin","admin.js")));
+app.get("/sitemap.xml",(req,res)=>{
+  const baseUrl="https://tyoharhub.onrender.com";
+
+  const urls=[
+    "/"
+  ];
+
+  const xml=`<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls.map(url=>`
+  <url>
+    <loc>${baseUrl}${url}</loc>
+  </url>`).join("")}
+</urlset>`;
+
+  res.type("application/xml").send(xml);
+});
 app.get("*",(req,res)=>{if(req.path.startsWith("/api/"))return res.status(404).end();res.sendFile(path.join(__dirname,"public","index.html"))});
 app.listen(PORT,()=>console.log(`TyoharHub running at http://localhost:${PORT}`));
